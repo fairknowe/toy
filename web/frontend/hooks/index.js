@@ -1,0 +1,1 @@
+export { useAppQuery } from "./useAppQuery";

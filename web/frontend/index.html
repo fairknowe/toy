@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+
+  <!-- Ensures that the UI is properly scaled in the Shopify Mobile app -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta id="shopify-api-key" name="shopify-api-key" content="apiKey" />
+  <script>
+    // Function to set or update a meta tag
+    function setOrUpdateMeta(id, content) {
+      let element = document.head.querySelector(`meta[id="${id}"]`);
+      if (element) {
+        element.content = content;  // Update existing meta tag
+        // console.log(`Updated meta tag: ${id} = ${content}`);
+      } else {
+        element = document.createElement('meta');  // Create new meta tag
+        element.id = id;
+        element.name = id;
+        element.content = content;
+        document.head.appendChild(element);
+        console.log(`Created meta tag: ${id} = ${content}`);
+      }
+    }
+    function addAppBridgeScript() {
+      let element = document.head.querySelector('#shopify-app-bridge');
+      if (element) {
+        console.log('App Bridge script already exists');
+        return;
+      } else {
+        const script = document.createElement('script');
+        script.id = 'shopify-app-bridge';
+        script.src = 'https://cdn.shopify.com/shopifycloud/app-bridge.js';
+        script.defer = false;
+        script.async = false;
+        // Find the first script element in the head (if any)
+        const firstScript = document.head.querySelector('script');
+        if (firstScript) {
+          document.head.insertBefore(script, firstScript);
+        } else {
+          document.head.appendChild(script);
+        }
+        // console.log('Added Shopify App Bridge script');
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+      setOrUpdateMeta('shopify-api-key', __SHOPIFY_CLIENT_ID__);
+      addAppBridgeScript()
+    });
+  </script>
+  <script>
+    console.log('window.name', window.name)
+  </script>
+  <script type="module">
+    if (!import.meta.env || !import.meta.env.PROD) {
+      // Because the base HTML is rendered in the server side, we need to manually embed the code to enable HMR in our
+      // code, so that the vite server is properly enabled to run HMR
+      const script = document.createElement('script');
+      script.setAttribute('type', "module");
+      script.setAttribute('src', "./dev_embed.js");
+      document.getElementsByTagName('head')[0].append(script);
+    }
+  </script>
+</head>
+
+<body>
+  <div id="app"><!--index.jsx injects App.jsx here--></div>
+  <script type="module" src="/index.jsx"></script>
+</body>
+
+</html>

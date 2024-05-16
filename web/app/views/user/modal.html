@@ -1,0 +1,67 @@
+<!-- app/views/users/modal.html.erb -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Modal</title>
+    <!-- Optional: Include CSS or other meta tags as needed -->
+    <script>
+        // Function to set or update a meta tag
+        function setOrUpdateMeta(id, content) {
+            let element = document.head.querySelector(`meta[id="${id}"]`);
+            if (element) {
+                element.content = content;  // Update existing meta tag
+                console.log(`Updated meta tag: ${id} = ${content}`);
+            } else {
+                element = document.createElement('meta');  // Create new meta tag
+                element.id = id;
+                element.name = id;
+                element.content = content;
+                document.head.appendChild(element);
+                console.log(`Created meta tag: ${id} = ${content}`);
+            }
+        }
+        function addAppBridgeScript() {
+            let element = document.head.querySelector('#shopify-app-bridge');
+            if (element) {
+                console.log('App Bridge script already exists');
+                return;
+            } else {
+                const script = document.createElement('script');
+                script.id = 'shopify-app-bridge';
+                script.src = 'https://cdn.shopify.com/shopifycloud/app-bridge.js';
+                script.defer = false;
+                script.async = false;
+                // Find the first script element in the head (if any)
+                const firstScript = document.head.querySelector('script');
+                if (firstScript) {
+                    document.head.insertBefore(script, firstScript);
+                } else {
+                    document.head.appendChild(script);
+                }
+                console.log('Added Shopify App Bridge script');
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            setOrUpdateMeta('shopify-api-key', __SHOPIFY_CLIENT_ID__);
+            addAppBridgeScript()
+        });
+    </script>
+</head>
+
+<body>
+    <h1>User Details</h1>
+    <p>Name: <%= @user.name %></p>
+        <p>Email: <%= @user.email %></p>
+        <!-- Additional content about the user -->
+        <dialog open>
+            <p>Greetings, one and all!</p>
+            <form method="dialog">
+                <button>OK</button>
+            </form>
+        </dialog>
+</body>
+</html>
