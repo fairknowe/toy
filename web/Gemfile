@@ -61,10 +61,14 @@ group :development do
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
   # gem "spring"
   gem "erb_lint", "~> 0.5.0"
-  gem "rubocop", "~> 1.63", ">= 1.63.1"
-  gem "rubocop-rails", "~> 2.24", ">= 2.24.1"
+  gem "rubocop", "~> 1.63"
+  gem "rubocop-rails", "~> 2.24"
   gem "rubocop-rails-omakase", "1.0", ">=1.0.0", require: false, group: [ :development ]
-  gem "rubocop-rake", "~> 0.6", ">= 0.6.0"
+  gem "rubocop-rake", "~> 0.6"
+  gem "rubocop-performance", "~> 1.21"
+  gem "drb", "2.2.1"
+  gem "bigdecimal", "3.1.8"
+  gem "rubocop-shopify", "2.15.1"
 end
 
 gem "rubyzip", "~> 2.3", ">= 2.3.2"

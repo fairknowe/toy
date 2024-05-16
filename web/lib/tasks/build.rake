@@ -2,7 +2,7 @@
 
 namespace :build do
   desc "Run all build tasks"
-  task all: ["assets:precompile", :build_frontend_links]
+  task all: [ "assets:precompile", :build_frontend_links ]
 
   desc "Build symlinks for FE assets"
   task build_frontend_links: :environment do

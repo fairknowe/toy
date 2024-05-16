@@ -9,7 +9,7 @@ import {
   InlineGrid,
   Divider,
 } from "@shopify/polaris";
-import { themeDefault } from '@shopify/polaris-tokens';
+// import { themeDefault } from '@shopify/polaris-tokens';
 import { TitleBar } from "@shopify/app-bridge-react";
 import { useTranslation, Trans } from "react-i18next";
 

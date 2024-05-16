@@ -18,8 +18,8 @@ module Toy
     if ShopifyAPI::Context.embedded?
       config.action_dispatch.default_headers = config.action_dispatch.default_headers.merge({
         # "Access-Control-Allow-Origin" => "*", # Uncomment this line to allow all origins
-        "Access-Control-Allow-Origin" => 'http://localhost:3001',
-        "Access-Control-Allow-Headers" => 'Origin, Content-Type, Accept, Authorization, X-Requested-With',
+        "Access-Control-Allow-Origin" => "http://localhost:3001",
+        "Access-Control-Allow-Headers" => "Origin, Content-Type, Accept, Authorization, X-Requested-With",
         "Access-Control-Expose-Headers" => "X-Shopify-API-Request-Failure-Reauthorize-Url",
         "Access-Control-Allow-Credentials" => "true",
       })

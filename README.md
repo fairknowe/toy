@@ -1,5 +1,8 @@
 # TOY App
 
+## Configure rubucop and run clean test
+
+## Initial commit
 Based on shopify-app-template-ruby (https://github.com/Shopify/shopify-app-template-ruby).
 
 Revisions to the template were made to bring versions up to date, and to add a User reporting, Modal test, and Toast test features to the template.

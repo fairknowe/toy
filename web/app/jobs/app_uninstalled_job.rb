@@ -11,7 +11,7 @@ class AppUninstalledJob < ActiveJob::Base
   end
 
   def perform(topic:, shop_domain:, webhook:)
-  # def perform(data:)
+    # def perform(data:)
     # shop_domain = data[:shop]
     shop = Shop.find_by(shopify_domain: shop_domain)
 

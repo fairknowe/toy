@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class ProductsCount < ApplicationService
-
     RETRIEVE_PRODUCTS_COUNT = <<~QUERY
     {
     productsCount {
@@ -21,10 +20,10 @@ class ProductsCount < ApplicationService
 
         begin
             response = client.query(
-                query: RETRIEVE_PRODUCTS_COUNT
+              query: RETRIEVE_PRODUCTS_COUNT,
             )
         rescue => e
-            Rails.logger.error "[#{self.class}] - Line #{__LINE__}: in ProductsCount#call, error: #{e.message}"
+            Rails.logger.error("[#{self.class}] - Line #{__LINE__}: in ProductsCount#call, error: #{e.message}")
             return e.message
         end
 
@@ -33,8 +32,8 @@ class ProductsCount < ApplicationService
             # Rails.logger.info "[#{self.class}] - Line #{__LINE__}: in ProductsCount#call, product_count: #{product_count}"
             product_count
         else
-            Rails.logger.error "[#{self.class}] - Line #{__LINE__}: in ProductsCount#call, response.errors: #{response.errors}"
-            return response
+            Rails.logger.error("[#{self.class}] - Line #{__LINE__}: in ProductsCount#call, response.errors: #{response.errors}")
+            response
         end
     end
 end
