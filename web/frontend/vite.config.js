@@ -1,8 +1,7 @@
 import { defineConfig, loadEnv } from "vite";
+import react from "@vitejs/plugin-react";
 import { dirname } from "path";
 import { fileURLToPath } from "url";
-import https from "https";
-import react from "@vitejs/plugin-react";
 
 if (
   process.env.npm_lifecycle_event === "build" &&
@@ -15,9 +14,9 @@ if (
 }
 
 const proxyOptions = {
-  target: `http://127.0.0.1:${process.env.BACKEND_PORT}`,
+  target: `http://localhost:${process.env.BACKEND_PORT}`,
   changeOrigin: false,
-  secure: true,
+  secure: false,
   ws: false,
 };
 
@@ -30,8 +29,8 @@ if (host === "localhost") {
   hmrConfig = {
     protocol: "ws",
     host: "localhost",
-    port: 64999,
-    clientPort: 64999,
+    port: process.env.FRONTEND_PORT,
+    clientPort: process.env.FRONTEND_PORT,
   };
 } else {
   hmrConfig = {
@@ -43,11 +42,15 @@ if (host === "localhost") {
 }
 
 export default ({ mode }) => {
+  console.log('host:', host)
   console.log('mode:', mode);
-  console.log('process.cwd():', process.cwd());
+  console.log('root:', dirname(fileURLToPath(import.meta.url)));
+  console.log('frontendPort:', process.env.FRONTEND_PORT);
+  console.log('backendPort:', process.env.BACKEND_PORT);
   console.log('SHOPIFY_API_KEY:', JSON.stringify(process.env.SHOPIFY_API_KEY));
   const env = loadEnv(mode, process.cwd());
   console.log('VITE_SHOPIFY_CLIENT_ID:', JSON.stringify(env.VITE_SHOPIFY_CLIENT_ID));
+
   return defineConfig({
     root: dirname(fileURLToPath(import.meta.url)),
     plugins: [react()],
@@ -65,6 +68,7 @@ export default ({ mode }) => {
       proxy: {
         "^/(\\?.*)?$": proxyOptions,
         "^/api(/|(\\?.*)?$)": proxyOptions,
+        "^/cable": proxyOptions, // ActionCable
       },
     },
   });

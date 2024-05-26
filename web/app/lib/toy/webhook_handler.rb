@@ -6,7 +6,7 @@ module Toy
   extend ShopifyAPI::Webhooks::WebhookHandler
 
     class << self
-      # include Skuvu::SignalMethods
+      # include Toy::SignalMethods
       def handle(data: nil)
         # Rails.logger.info "[#{self.class}] - Line #{__LINE__}: in WebhookHandler#handle. Received webhook! topic: #{data.topic} shop: #{data.shop} webhook_id: #{data.webhook_id} api_version: #{data.api_version} body: #{data.body}"
       end
@@ -26,13 +26,3 @@ module Toy
     end
   end
 end
-
-# module WebhookHandler
-#   extend ShopifyAPI::Webhooks::WebhookHandler
-
-#   class << self
-#     def handle_webhook(data:)
-#       puts "Received webhook! topic: #{data.topic} shop: #{data.shop} body: #{data.body} webhook_id: #{data.webhook_id} api_version: #{data.api_version"
-#     end
-#   end
-# end

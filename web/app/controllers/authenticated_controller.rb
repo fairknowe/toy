@@ -6,10 +6,8 @@ class AuthenticatedController < ApplicationController
   helper_method :current_user_id
 
   def current_user_id
-    # Rails.logger.info "[#{self.class}] - Line #{__LINE__}: in AuthenticatedController#current_user_id. current_shopify_session: #{current_shopify_session.inspect}"
     Rails.logger.info("[#{self.class}] - Line #{__LINE__}: in AuthenticatedController#current_user_id. current_shopify_session scope: #{current_shopify_session.scope}")
     associated_user = current_shopify_session.associated_user
-    # Rails.logger.info "[#{self.class}] - Line #{__LINE__}: in AuthenticatedController#current_user_id. associated_user: #{associated_user.inspect}"
     return unless associated_user
 
     @user_id = associated_user.id

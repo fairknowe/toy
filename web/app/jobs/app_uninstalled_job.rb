@@ -11,16 +11,14 @@ class AppUninstalledJob < ActiveJob::Base
   end
 
   def perform(topic:, shop_domain:, webhook:)
-    # def perform(data:)
-    # shop_domain = data[:shop]
     shop = Shop.find_by(shopify_domain: shop_domain)
 
     if shop.nil?
-      logger.error("#{self.class} failed: cannot find shop with domain '#{shop_domain}'")
+      Rails.logger.error("#{self.class} failed: cannot find shop with domain '#{shop_domain}'")
       return
     end
 
-    logger.info("#{self.class} started for shop '#{shop_domain}'")
+    Rails.logger.info("#{self.class} Delete shop '#{shop_domain}'")
     shop.destroy
   end
 end

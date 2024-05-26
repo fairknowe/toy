@@ -19,6 +19,23 @@ import { ProductsCard, UsersCard } from "../components";
 
 export default function HomePage() {
   const { t } = useTranslation();
+
+  const reportedTime = new Date().getTime();
+  // console.log("App() executed at: " + new Date(reportedTime).toISOString());
+
+  // Calculate the time difference
+  const pagesIndexStartTime = window.pagesIndexStartTime || null;
+  if (pagesIndexStartTime) {
+    const timeDifference = reportedTime - pagesIndexStartTime;
+    console.log("'/App.jsx' render 'pages/index.jsx' duration: " + timeDifference + "ms");
+    const startToEndDifference = reportedTime - window.yieldStartTime;
+    console.log("'layouts/embedded_app' to 'pages/index.jsx' duration: " + startToEndDifference + "ms");
+  } else {
+    console.warn("Start time not found. Unable to calculate time difference.");
+  };
+
+
+
   return (
     <Page narrowWidth>
       <TitleBar title={t("HomePage.title")} primaryAction={null} />

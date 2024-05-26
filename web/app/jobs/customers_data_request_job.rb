@@ -14,12 +14,12 @@ class CustomersDataRequestJob < ActiveJob::Base
     shop = Shop.find_by(shopify_domain: shop_domain)
 
     if shop.nil?
-      logger.error("#{self.class} failed: cannot find shop with domain '#{shop_domain}'")
+      Rails.logger.error("#{self.class} failed: cannot find shop with domain '#{shop_domain}'")
       return
     end
 
     shop.with_shopify_session do
-      logger.info("#{self.class} started for shop '#{shop_domain}'")
+      Rails.logger.info("#{self.class} Retrieve customer data for shop '#{shop_domain}'")
     end
   end
 end

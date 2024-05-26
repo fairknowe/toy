@@ -7,7 +7,6 @@ class AppWebhooksController < ActionController::Base
 
   def receive
     if params[:myshopify_domain].present? && params[:domain].present?
-      Rails.logger.info("[#{self.class}] - Line #{__LINE__}: in AppWebhooksController#index. params: #{params}")
       # Parse and convert the body to a hash if it's passed as parameters
       body_params = params[:app_webhook].permit!.to_h if params[:app_webhook].present?
       data = ShopifyAPI::Webhooks::WebhookMetadata.new(

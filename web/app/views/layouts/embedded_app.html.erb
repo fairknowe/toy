@@ -4,7 +4,9 @@
     <meta charset="utf-8" />
     <% application_name = ShopifyApp.configuration.application_name %>
     <title><%= application_name %></title>
+    <%= csrf_meta_tags %>
     <%= stylesheet_link_tag 'application' %>
+    <%= action_cable_meta_tag %>
     <% if ShopifyApp.use_webpacker? %>
       <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
     <% elsif ShopifyApp.use_importmap? %>
@@ -12,22 +14,31 @@
     <% else %>
       <%= javascript_include_tag 'application', "data-turbolinks-track" => true %>
     <% end %>
-    <%= csrf_meta_tags %>
+    <meta name="shopify-api-key" content="<%= ShopifyApp.configuration.api_key %>">
+    <meta name="shopify-client-id" content="<%= ShopifyApp.configuration.api_key %>">
+    <script src="https://cdn.shopify.com/shopifycloud/app-bridge.js" nonce="<%= request.content_security_policy_nonce %>"></script>
+    <script>
+      (async () => {
+        const shop = await shopify.config.shop;
+        console.log(shop);
+        const locale = await shopify.config.locale;
+        console.log(locale);
+      })();
+    </script>
+    <% if Rails.env.development? %>
+      <script type="module" src="./dev_embed.js"></script>
+    <% end %>
+    <script>
+      var reportedTime = new Date().getTime();
+      window.yieldStartTime = reportedTime;
+      console.log("'layouts/embedded_app' yield to 'home/index' started at: " + new Date(reportedTime).toISOString());
+    </script>
   </head>
-
   <body>
-    <div class="app-wrapper">
-      <div class="app-content">
-        <main role="main">
-          <%= yield %>
-        </main>
-      </div>
+    <%= turbo_stream_from "toy-#{@shop_origin}" %>
+    <div>
+      <%= yield %>
     </div>
-
-    <%= render 'layouts/flash_messages' %>
-
-    <script src="https://unpkg.com/@shopify/app-bridge@2"></script>
-
     <%= content_tag(:div, nil, id: 'shopify-app-init', data: {
       api_key: ShopifyApp.configuration.api_key,
       shop_origin: @shop_origin || (@current_shopify_session.shop if @current_shopify_session),

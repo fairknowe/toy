@@ -1,15 +1,16 @@
 # frozen_string_literal: true
 
 ShopifyApp.configure do |config|
-  config.webhooks_manager_queue_name = "webhooks_manager"
+  config.log_level = :info
 
+  config.webhooks_manager_queue_name = "webhooks_manager"
   config.webhooks = [
     # After a store owner uninstalls your app, Shopify invokes the APP_UNINSTALLED webhook
     # to let your app know.
     { topic: "app/uninstalled", address: "api/toy_webhooks/app_uninstalled" },
-    { topic: "products/create", address: "api/toy_webhooks/app_uninstalled"  },
-    { topic: "products/update", address: "api/toy_webhooks/app_uninstalled"  },
-    { topic: "products/delete", address: "api/toy_webhooks/app_uninstalled"  },
+    # { topic: "products/create", address: "api/toy_webhooks/app_uninstalled"  },
+    # { topic: "products/update", address: "api/toy_webhooks/app_uninstalled"  },
+    # { topic: "products/delete", address: "api/toy_webhooks/app_uninstalled"  },
   ]
   config.application_name = "Toy"
   config.old_secret = ""
@@ -61,7 +62,7 @@ Rails.application.config.after_initialize do
       is_private: !ENV.fetch("SHOPIFY_APP_PRIVATE_SHOP", "").empty?,
       is_embedded: ShopifyApp.configuration.embedded_app,
       logger: Rails.logger,
-      log_level: :debug,
+      log_level: ShopifyApp.configuration.log_level,
       private_shop: ENV.fetch("SHOPIFY_APP_PRIVATE_SHOP", nil),
       user_agent_prefix: "ShopifyApp/#{ShopifyApp::VERSION}",
     )
