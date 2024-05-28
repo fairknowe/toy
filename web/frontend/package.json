@@ -5,7 +5,7 @@
   "license": "UNLICENSED",
   "scripts": {
     "build": "vite build",
-    "dev": "vite",
+    "dev": "vite --debug",
     "coverage": "vitest run --coverage"
   },
   "type": "module",

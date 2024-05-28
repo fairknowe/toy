@@ -3,6 +3,9 @@
 ## Hotwire test
 Add Turbo Hotwire to the template.
 
+### fixed websocket (/cable') proxying
+changed vite config proxying target protocol to 'ws'; switched on vite debug; some rubocop corrections
+
 ### Updated webhooks code
 Updated webhook controller and handler. Modified app uninstall webhook to remove shop and user data.
 

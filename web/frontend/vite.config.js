@@ -68,7 +68,10 @@ export default ({ mode }) => {
       proxy: {
         "^/(\\?.*)?$": proxyOptions,
         "^/api(/|(\\?.*)?$)": proxyOptions,
-        "^/cable": proxyOptions, // ActionCable
+        "^/cable": {
+          target: `ws://0.0.0.0:${process.env.BACKEND_PORT}`,
+          ws: true,
+        }
       },
     },
   });
