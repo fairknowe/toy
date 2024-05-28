@@ -3,6 +3,9 @@
 ## Hotwire test
 Add Turbo Hotwire to the template.
 
+### corrected backend proxy target
+switched address from 'localhost' to '0.0.0.0'
+
 ### fixed websocket (/cable') proxying
 changed vite config proxying target protocol to 'ws'; switched on vite debug; some rubocop corrections
 

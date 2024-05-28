@@ -9,8 +9,6 @@ module Toy
       def handle(data: nil)
         return if data.nil?
 
-        Rails.logger.info("[#{self.class}] - Line #{__LINE__}: in WebhookHandler#handle. topic: #{data.topic} shop: #{data.shop} webhook_id: #{data.webhook_id} api_version: #{data.api_version} body: #{data.body}")
-
         topic = data.topic
         job_class_name = [ ShopifyApp.configuration.webhook_jobs_namespace, "#{topic}_job" ].compact.join("/").classify
 
