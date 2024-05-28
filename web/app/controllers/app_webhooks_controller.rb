@@ -16,7 +16,7 @@ class AppWebhooksController < ActionController::Base
         api_version: ShopifyAPI::Context.api_version,
         webhook_id: params["id"].to_s,
         )
-    Toy::WebhookHandler.handle(data:)
+      Toy::WebhookHandler.handle(data:)
     end
     head(:ok)
   end

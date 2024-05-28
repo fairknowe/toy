@@ -3,8 +3,10 @@
 ## Hotwire test
 Add Turbo Hotwire to the template.
 
-### Interim commit
-Bug fixes and updates to logging.
+### Updated webhooks code
+Updated webhook controller and handler. Modified app uninstall webhook to remove shop and user data.
+
+### Bug fixes and updates to logging.
 Websocket connection failures persist. Trouble sorting out ports and the tunnel URL; still a work in progress. But otherwise the app loads and runs satisfactorily.
 
 ```
