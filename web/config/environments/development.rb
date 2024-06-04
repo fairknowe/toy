@@ -3,14 +3,15 @@
 require "active_support/core_ext/integer/time"
 
 Rails.application.configure do
-  # config.log_level = :info
+  config.log_level = :info
+
   config.hosts = begin
     config.hosts
   rescue
     []
   end << /[-\w.]+\.ngrok\.io/
 
-  config.hosts << URI(ENV.fetch("HOST", "")).host if ENV.fetch("HOST", "").present?
+  # config.hosts << URI(ENV.fetch("TUNNEL_URL", "")).host if ENV.fetch("TUNNEL_URL", "").present?
   # Settings specified here will take precedence over those in config/application.rb.
 
   # In the development environment your application's code is reloaded any time
@@ -34,7 +35,8 @@ Rails.application.configure do
     config.action_controller.perform_caching = true
     config.action_controller.enable_fragment_cache_logging = true
 
-    config.cache_store = :memory_store
+    # config.cache_store = :memory_store
+    config.cache_store = :redis_cache_store, { url: ENV.fetch("REDIS_URL", nil) }
     config.public_file_server.headers = {
       "Cache-Control" => "public, max-age=#{2.days.to_i}",
     }
@@ -67,6 +69,9 @@ Rails.application.configure do
   # Highlight code that triggered database queries in logs.
   config.active_record.verbose_query_logs = true
 
+  # Highlight code that enqueued background job in logs.
+  config.active_job.verbose_enqueue_logs = true
+
   # Suppress logger output for asset requests.
   config.assets.quiet = true
 
@@ -78,6 +83,10 @@ Rails.application.configure do
 
   # Uncomment if you wish to allow Action Cable access from any origin.
   config.action_cable.disable_request_forgery_protection = true
+
+  config.action_cable.mount_path = "/cable"
+  config.action_cable.url = "wss://fki.ngrok.io/cable/"
+  config.action_cable.allowed_request_origins = [ "http://localhost:3000", "http://localhost:3001", "http://localhost:3002", "https://localhost:3000", "https://localhost:3001", "http://localhost:3002", "https://fki.ngrok.io" ]
 
   # Raise error when a before_action's only/except options reference missing actions
   config.action_controller.raise_on_missing_callback_actions = true

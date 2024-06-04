@@ -12,21 +12,19 @@
     function setOrUpdateMeta(id, content) {
       let element = document.head.querySelector(`meta[id="${id}"]`);
       if (element) {
-        element.content = content;  // Update existing meta tag
-        // console.log(`Updated meta tag: ${id} = ${content}`);
+        element.content = content;
       } else {
-        element = document.createElement('meta');  // Create new meta tag
+        element = document.createElement('meta');
         element.id = id;
         element.name = id;
         element.content = content;
         document.head.appendChild(element);
-        console.log(`Created meta tag: ${id} = ${content}`);
       }
     }
     function addAppBridgeScript() {
       let element = document.head.querySelector('#shopify-app-bridge');
       if (element) {
-        console.log('App Bridge script already exists');
+        console.warn('App Bridge script already exists');
         return;
       } else {
         const script = document.createElement('script');
@@ -41,17 +39,13 @@
         } else {
           document.head.appendChild(script);
         }
-        // console.log('Added Shopify App Bridge script');
       }
     }
 
     document.addEventListener("DOMContentLoaded", function () {
       setOrUpdateMeta('shopify-api-key', __SHOPIFY_CLIENT_ID__);
-      addAppBridgeScript()
+      addAppBridgeScript();
     });
-  </script>
-  <script>
-    console.log('window.name', window.name)
   </script>
   <script type="module">
     if (!import.meta.env || !import.meta.env.PROD) {

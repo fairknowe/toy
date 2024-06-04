@@ -14,11 +14,12 @@ class CustomersRedactJob < ActiveJob::Base
     shop = Shop.find_by(shopify_domain: shop_domain)
 
     if shop.nil?
-      logger.error("#{self.class} failed: cannot find shop with domain '#{shop_domain}'")
+      Rails.logger.error("#{self.class} failed: cannot find shop with domain '#{shop_domain}'")
       return
     end
 
     shop.with_shopify_session do
+      Rails.logger.info("#{self.class} Delete customer data for shop '#{shop_domain}'")
     end
   end
 end

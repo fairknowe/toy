@@ -35,6 +35,8 @@ export default function App() {
           <QueryProvider>
             <NavMenu>
               <a href="/pagename">{t("NavMenu.pageName")}</a>
+              <a href="/NotFound">NotFound</a>
+              <a href="/ErrorHandler">ErrorHandler</a>
             </NavMenu>
             <Routes pages={pages} />
           </QueryProvider>

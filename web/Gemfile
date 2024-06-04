@@ -73,8 +73,5 @@ end
 
 gem "rubyzip", "~> 2.3", ">= 2.3.2"
 
-gem "good_job", "~> 3.27", ">= 3.27.4"
-gem "sidekiq", "~> 7.2", ">= 7.2.2"
-
 gem "shopify_app", "~> 22.2.1"
 gem "shopify_api", "~> 14.3.0"

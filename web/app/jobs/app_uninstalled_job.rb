@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class AppUninstalledJob < ActiveJob::Base
-  # extend ShopifyAPI::Webhooks::WebhookHandler
   extend ShopifyAPI::Webhooks::Handler
 
   class << self
@@ -11,16 +10,22 @@ class AppUninstalledJob < ActiveJob::Base
   end
 
   def perform(topic:, shop_domain:, webhook:)
-    # def perform(data:)
-    # shop_domain = data[:shop]
     shop = Shop.find_by(shopify_domain: shop_domain)
 
     if shop.nil?
-      logger.error("#{self.class} failed: cannot find shop with domain '#{shop_domain}'")
+      Rails.logger.error("#{self.class} failed: cannot find shop with domain '#{shop_domain}'")
       return
     end
 
-    logger.info("#{self.class} started for shop '#{shop_domain}'")
-    shop.destroy
+    Rails.logger.info("[#{self.class}] - Line #{__LINE__}: in AppUninstalledJob. Deleting shop '#{shop_domain}' and associated users")
+
+    ActiveRecord::Base.transaction do
+      User.where(shopify_domain: shop_domain).destroy_all
+      shop.destroy!
+    end
+
+    Rails.logger.info("[#{self.class}] - Line #{__LINE__}: in AppUninstalledJob. Successfully deleted shop '#{shop_domain}' and associated users")
+  rescue StandardError => e
+    Rails.logger.error("[#{self.class}] - Line #{__LINE__}: in AppUninstalledJob. Error deleting shop '#{shop_domain}' and associated users: #{e.message}")
   end
 end

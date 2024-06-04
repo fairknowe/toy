@@ -13,6 +13,11 @@ module Toy
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults(7.1)
 
+    config.log_formatter = ActiveSupport::Logger::Formatter.new
+    config.log_formatter = proc do |severity, datetime, _progname, msg|
+      "#{datetime}: #{severity} : #{msg}\n"
+    end
+
     config.assets.prefix = "/api/assets"
 
     if ShopifyAPI::Context.embedded?
@@ -25,21 +30,14 @@ module Toy
       })
     end
 
-    config.log_formatter = ActiveSupport::Logger::Formatter.new
-    config.log_formatter = proc do |severity, datetime, _progname, msg|
-      next if msg.nil? || msg.include?("/sidekiq/") || msg.include?("Cannot render console from")
-
-      "#{datetime} : #{severity} : #{msg}\n"
-    end
-
     config.active_record.schema_format = :ruby
+    config.time_zone = "Eastern Time (US & Canada)"
+
     # Configuration for the application, engines, and railties goes here.
     #
     # These settings can be overridden in specific environments using the files
     # in config/environments, which are processed later.
     #
-    # config.time_zone = "Central Time (US & Canada)"
-    config.time_zone = "Eastern Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
   end
 end

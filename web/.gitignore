@@ -37,4 +37,4 @@
 /config/master.key
 /config/credentials.yml.enc
 
-Gemfile.lock
+# Gemfile.lock

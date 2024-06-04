@@ -9,16 +9,14 @@ import {
   InlineGrid,
   Divider,
 } from "@shopify/polaris";
-// import { themeDefault } from '@shopify/polaris-tokens';
 import { TitleBar } from "@shopify/app-bridge-react";
 import { useTranslation, Trans } from "react-i18next";
-
 import { trophyImage } from "../assets";
-
 import { ProductsCard, UsersCard } from "../components";
 
 export default function HomePage() {
   const { t } = useTranslation();
+
   return (
     <Page narrowWidth>
       <TitleBar title={t("HomePage.title")} primaryAction={null} />
@@ -94,7 +92,7 @@ export default function HomePage() {
                 <Trans
                   i18nKey="HomePage.appDeveloperLink"
                   components={{
-                    FaireknoweIncLink: (
+                    FairknoweIncLink: (
                       < Link
                         url="https://fairknowe.com"
                         target="_blank"
@@ -105,6 +103,7 @@ export default function HomePage() {
                   }}
                 />
               </p>
+              <div id="hotwire-test"></div>
             </BlockStack>
             {/* </InlineGrid> */}
           </Card>
