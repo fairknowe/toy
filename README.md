@@ -3,6 +3,9 @@
 ## Hotwire test
 Add Turbo Hotwire to the template.
 
+### added Hotwire Turbo Streams example
+Uses Turbo Streams broadcastable module to update (add) and remove (close) a div element
+
 ### corrected backend proxy target
 switched address from 'localhost' to '0.0.0.0'
 

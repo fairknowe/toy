@@ -14,6 +14,8 @@ Rails.application.routes.draw do
   get "/api/current/user", to: "user#current"
   get "/api/products/count", to: "products#count"
   post "/api/products/create", to: "products#create"
+  get "/api/hotwire/update", to: "hotwire#update"
+  get "/api/hotwire/close", to: "hotwire#close"
 
   # Any other routes will just render the react app
   match "*path" => "home#index", via: [ :get, :post ]

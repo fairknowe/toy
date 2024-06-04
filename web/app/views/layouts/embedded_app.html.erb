@@ -17,22 +17,9 @@
     <meta name="shopify-api-key" content="<%= ShopifyApp.configuration.api_key %>">
     <meta name="shopify-client-id" content="<%= ShopifyApp.configuration.api_key %>">
     <script src="https://cdn.shopify.com/shopifycloud/app-bridge.js" nonce="<%= request.content_security_policy_nonce %>"></script>
-    <script>
-      (async () => {
-        const shop = await shopify.config.shop;
-        console.log(shop);
-        const locale = await shopify.config.locale;
-        console.log(locale);
-      })();
-    </script>
     <% if Rails.env.development? %>
       <script type="module" src="./dev_embed.js"></script>
     <% end %>
-    <script>
-      var reportedTime = new Date().getTime();
-      window.yieldStartTime = reportedTime;
-      console.log("'layouts/embedded_app' yield to 'home/index' started at: " + new Date(reportedTime).toISOString());
-    </script>
   </head>
   <body>
     <%= turbo_stream_from "toy-#{@shop_origin}" %>

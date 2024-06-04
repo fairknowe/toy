@@ -44,7 +44,6 @@ export function ProductsCard() {
       body: JSON.stringify({ count: productsCount })
     });
     const message = await response.json();
-    console.log("in ProductsCard. Populate products message:", message);
 
     if (message.success) {
       await refetchProductCount();

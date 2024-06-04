@@ -9,32 +9,13 @@ import {
   InlineGrid,
   Divider,
 } from "@shopify/polaris";
-// import { themeDefault } from '@shopify/polaris-tokens';
 import { TitleBar } from "@shopify/app-bridge-react";
 import { useTranslation, Trans } from "react-i18next";
-
 import { trophyImage } from "../assets";
-
 import { ProductsCard, UsersCard } from "../components";
 
 export default function HomePage() {
   const { t } = useTranslation();
-
-  const reportedTime = new Date().getTime();
-  // console.log("App() executed at: " + new Date(reportedTime).toISOString());
-
-  // Calculate the time difference
-  const pagesIndexStartTime = window.pagesIndexStartTime || null;
-  if (pagesIndexStartTime) {
-    const timeDifference = reportedTime - pagesIndexStartTime;
-    console.log("'/App.jsx' render 'pages/index.jsx' duration: " + timeDifference + "ms");
-    const startToEndDifference = reportedTime - window.yieldStartTime;
-    console.log("'layouts/embedded_app' to 'pages/index.jsx' duration: " + startToEndDifference + "ms");
-  } else {
-    console.warn("Start time not found. Unable to calculate time difference.");
-  };
-
-
 
   return (
     <Page narrowWidth>
@@ -111,7 +92,7 @@ export default function HomePage() {
                 <Trans
                   i18nKey="HomePage.appDeveloperLink"
                   components={{
-                    FaireknoweIncLink: (
+                    FairknoweIncLink: (
                       < Link
                         url="https://fairknowe.com"
                         target="_blank"
@@ -122,6 +103,7 @@ export default function HomePage() {
                   }}
                 />
               </p>
+              <div id="hotwire-test"></div>
             </BlockStack>
             {/* </InlineGrid> */}
           </Card>

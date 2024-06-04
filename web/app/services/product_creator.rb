@@ -21,7 +21,6 @@ class ProductCreator < ApplicationService
   end
 
   def call
-    Rails.logger.info("[#{self.class}] - Line #{__LINE__}: in ProductCreator#call. session: #{@session.inspect}")
     client = ShopifyAPI::Clients::Graphql::Admin.new(session: @session)
     created_products = []
 
@@ -34,8 +33,6 @@ class ProductCreator < ApplicationService
           },
         },
       )
-
-      Rails.logger.info("[#{self.class}] - Line #{__LINE__}: in ProductCreator#call, response.body: #{response.body}")
 
       return { success: false, error: response.body["errors"][0]["message"], status_code: 200 } if response.body["errors"].present?
 

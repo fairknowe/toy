@@ -28,19 +28,6 @@ export default function App() {
   const pages = import.meta.globEager("./pages/**/!(*.test.[jt]sx)*.([jt]sx)");
   const { t } = useTranslation();
 
-  const reportedTime = new Date().getTime();
-  window.pagesIndexStartTime = reportedTime;
-  // console.log("'/App.jsx' render 'pages/index.jsx' start: " + new Date(reportedTime).toISOString());
-
-  // Calculate the time difference
-  if (window.renderStartTime) {
-    const timeDifference = reportedTime - window.renderStartTime;
-    console.log("'/index.jsx' render '/App.jsx' : " + timeDifference + "ms");
-  } else {
-    console.warn("Start time not found. Unable to calculate time difference.");
-  };
-
-
   return (
     <PolarisProvider>
       <BrowserRouter>
@@ -48,6 +35,8 @@ export default function App() {
           <QueryProvider>
             <NavMenu>
               <a href="/pagename">{t("NavMenu.pageName")}</a>
+              <a href="/NotFound">NotFound</a>
+              <a href="/ErrorHandler">ErrorHandler</a>
             </NavMenu>
             <Routes pages={pages} />
           </QueryProvider>

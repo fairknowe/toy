@@ -1,18 +1,4 @@
 <div id="toy-index">
-  <script>
-    reportedTime = new Date().getTime();
-    window.srcStartTime = reportedTime;
-    // console.log("'home/index' call to '/index.js' started at: " + new Date(reportedTime).toISOString());
-  </script>
-  <script type='module'>
-    if (window.yieldStartTime) {
-      const timeDifference = reportedTime - window.yieldStartTime;
-      console.log("'layouts/embedded_app' yield to 'home/index' duration: " + timeDifference + "ms");
-    } else {
-      console.warn("Start time not found. Unable to calculate time difference.");
-    };
-  </script>
-
   <div id="app"><!--index.jsx injects App.jsx here--></div>
   <script type="module" src="/index.jsx"></script>
 </div>

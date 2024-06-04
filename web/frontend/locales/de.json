@@ -8,7 +8,7 @@
     "yourAppIsReadyToExplore": "Deine App kann nun erkundet werden! Sie enthält alles, was du brauchst, um loszulegen: das <PolarisLink>Polaris Designsystem</PolarisLink>, die <AdminApiLink>Shopify Admin API</AdminApiLink> und die <AppBridgeLink>App Bridge</AppBridgeLink>-UI-Bibliothek sowie entsprechende Komponenten.",
     "appName": "TOY App",
     "appDeveloper": "🍁 Hergestellt in Kanada 🍁",
-    "appDeveloperLink": "Fairknowe Inc. <FaireknoweIncLink>https://www.fairknowe.com</FaireknoweIncLink>"
+    "appDeveloperLink": "Fairknowe Inc. <FairknoweIncLink>https://www.fairknowe.com</FairknoweIncLink>"
   },
   "NavMenu": {
     "pageName": "Seitenname"
@@ -16,6 +16,10 @@
   "NotFound": {
     "description": "Überprüfe die URL und versuche es erneut. Alternativ kannst du die Suchleiste verwenden, um zu finden, was du suchst.",
     "heading": "Unter dieser Adresse gibt es keine Seite"
+  },
+  "AppError": {
+    "description": "Die App wurde durch einen Systemfehler gestört.",
+    "heading": "Hoppla! Etwas ist schiefgelaufen!"
   },
   "PageName": {
     "body": "Nachricht",

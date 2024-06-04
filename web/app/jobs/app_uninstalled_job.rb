@@ -27,6 +27,5 @@ class AppUninstalledJob < ActiveJob::Base
     Rails.logger.info("[#{self.class}] - Line #{__LINE__}: in AppUninstalledJob. Successfully deleted shop '#{shop_domain}' and associated users")
   rescue StandardError => e
     Rails.logger.error("[#{self.class}] - Line #{__LINE__}: in AppUninstalledJob. Error deleting shop '#{shop_domain}' and associated users: #{e.message}")
-    raise
   end
 end

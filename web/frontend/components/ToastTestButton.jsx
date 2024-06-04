@@ -1,15 +1,15 @@
+import { useState } from 'react';
 import { Button } from "@shopify/polaris";
 import { useAppBridge } from "@shopify/app-bridge-react";
-import { useState, useEffect } from 'react';
 
-export function UserHelloToast() {
+export function ToastTestButton() {
     const shopify = useAppBridge();
-    const [userID, setUserID] = useState(null);
     const [error, setError] = useState(null);
 
     async function generateToast() {
+        const shop_domain = shopify.config.shop;
         try {
-            const response = await fetch('/api/current/user');
+            const response = await fetch(`/api/current/user?shop_domain=${encodeURIComponent(shop_domain)}`);
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
@@ -17,18 +17,13 @@ export function UserHelloToast() {
             if (!data['user']) {
                 throw new Error("No user data found");
             }
-            setUserID(data['user']['shopify_user_id']);
+            const userID = data['user']['shopify_user_id'];
+            shopify.toast.show(`Hello, user ${userID}!`);
         } catch (error) {
-            console.error("UserHelloToast. Error fetching user data:", error);
-            setError(`UserHelloToast. Error fetching user data: ${error.message || error.toString()}`);
+            console.error("ToastTestButton. Error fetching user data:", error);
+            setError(`ToastTestButton. Error fetching user data: ${error.message || error.toString()}`);
         }
     }
-    useEffect(() => {
-        if (userID) {
-            shopify.toast.show(`Hello, user ${userID}!`);
-            console.log("Success. shopify.toast.show(Hello, user" + userID + ")");
-        }
-    }, [userID]);
 
     return (
         <>

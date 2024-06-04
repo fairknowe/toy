@@ -8,7 +8,7 @@
     "yourAppIsReadyToExplore": "Your app is ready to explore! It contains everything you need to get started including the <PolarisLink>Polaris design system</PolarisLink>, <AdminApiLink>Shopify Admin API</AdminApiLink>, and <AppBridgeLink>App Bridge</AppBridgeLink> UI library and components.",
     "appName": "TOY App",
     "appDeveloper": "🍁 Made in Canada 🍁",
-    "appDeveloperLink": "Fairknowe Inc. <FaireknoweIncLink>https://www.fairknowe.com</FaireknoweIncLink>"
+    "appDeveloperLink": "Fairknowe Inc. <FairknoweIncLink>https://www.fairknowe.com</FairknoweIncLink>"
   },
   "NavMenu": {
     "pageName": "Page name"
@@ -16,6 +16,10 @@
   "NotFound": {
     "description": "Check the URL and try again, or use the search bar to find what you need.",
     "heading": "There is no page at this address"
+  },
+  "appError": {
+    "description": "The App has been tripped up by a system error.",
+    "heading": "Oops, something has gone wrong!"
   },
   "PageName": {
     "body": "Body",
