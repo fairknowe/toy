@@ -10,7 +10,12 @@ export function HotwireTestButton() {
     async function usePartial() {
         const shop_domain = shopify.config.shop;
         try {
-            const response = await fetch(`/api/hotwire/update?shop_domain=${encodeURIComponent(shop_domain)}`);
+            const response = await fetch(`/api/hotwire/update?shop_domain=${encodeURIComponent(shop_domain)}`, {
+                method: "GET",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            });
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }

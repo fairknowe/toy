@@ -11,7 +11,12 @@ export function attachCloseButtonListener(shop_domain) {
 function addCloseButtonListener(closeButton, shop_domain) {
     closeButton.addEventListener('click', async () => {
         try {
-            const response = await fetch(`/api/hotwire/close?shop_domain=${encodeURIComponent(shop_domain)}`);
+            const response = await fetch(`/api/hotwire/close?shop_domain=${encodeURIComponent(shop_domain)}`, {
+                method: "GET",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            });
             if (!response.ok) {
                 console.error('closeButton Error:', response.status);
             }

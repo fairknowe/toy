@@ -1,21 +1,26 @@
 # TOY App
 
+## Implement Shopify Billing API
+
+### added GraphQL queries and related frontend buttons v.0.3.0
+Added AppSubscriptionCreate and currentAppInstallation GraphQL queries with related test buttons on the front end.
+
 ## Hotwire test
 Add Turbo Hotwire to the template.
 
-### added Hotwire Turbo Streams example
+### added Hotwire Turbo Streams example v.0.2.0
 Uses Turbo Streams broadcastable module to update (add) and remove (close) a div element
 
-### corrected backend proxy target
+### corrected backend proxy target v.0.1.5
 switched address from 'localhost' to '0.0.0.0'
 
-### fixed websocket (/cable') proxying
+### fixed websocket (/cable') proxying v.0.1.4
 changed vite config proxying target protocol to 'ws'; switched on vite debug; some rubocop corrections
 
-### Updated webhooks code
+### Updated webhooks code v.0.1.3
 Updated webhook controller and handler. Modified app uninstall webhook to remove shop and user data.
 
-### Bug fixes and updates to logging.
+### Bug fixes and updates to logging. v.0.1.2
 Websocket connection failures persist. Trouble sorting out ports and the tunnel URL; still a work in progress. But otherwise the app loads and runs satisfactorily.
 
 ```
@@ -144,9 +149,9 @@ export NODE_ENV=development
  "XDG_SESSION_ID"=>"255",
  "XDG_SESSION_TYPE"=>"tty"}
 ```
-## Configure rubucop and run clean test
+## Configure rubucop and run clean test v.0.1.1
 
-## Initial commit
+## Initial commit v.0.1.0
 Based on shopify-app-template-ruby (https://github.com/Shopify/shopify-app-template-ruby).
 
 Revisions to the template were made to bring versions up to date, and to add a User reporting, Modal test, and Toast test features to the template.

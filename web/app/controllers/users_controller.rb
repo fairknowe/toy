@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class UserController < AuthenticatedController
+class UsersController < AuthenticatedController
   # GET /api/current/user
   def current
     shop_domain = params[:shop_domain]

@@ -19,6 +19,6 @@ class ProductsController < AuthenticatedController
     end
   rescue => e
     Rails.logger.error("Failed to create products: #{e.message}")
-    render(json: { success: false, error: e.message }, status: 500, ok: false)
+    render(json: { success: false, error: e.message }, status: 500)
   end
 end

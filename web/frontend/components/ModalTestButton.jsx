@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import { Modal, TitleBar, useAppBridge } from "@shopify/app-bridge-react";
 import { Button } from "@shopify/polaris";
 
@@ -17,7 +17,12 @@ export function ModalTestButton() {
             const userData = await shopify.user();
             setUserAccountAccess(userData.accountAccess);
 
-            const response = await fetch(`/api/current/user?shop_domain=${encodeURIComponent(shop_domain)}`);
+            const response = await fetch(`/api/current/user?shop_domain=${encodeURIComponent(shop_domain)}`, {
+                method: "GET",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            });
             if (!response.ok) {
                 throw new Error('Failed to fetch');
             }

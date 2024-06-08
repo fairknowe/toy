@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { ButtonGroup, Card, Text, Layout } from "@shopify/polaris";
 import { useAppBridge } from "@shopify/app-bridge-react";
-import { ModalTestButton, ToastTestButton, HotwireTestButton } from "../components";
+import { ModalTestButton, ToastTestButton, HotwireTestButton, SubscriptionCreateButton, SubscriptionStatusButton } from "../components";
 
 export function UsersCard() {
     const [userAccountAccess, setUserAccountAccess] = useState(null);
@@ -26,7 +26,12 @@ export function UsersCard() {
                 console.log("User accountAccess:", userData.accountAccess);
                 setUserAccountAccess(userData.accountAccess);
 
-                const response = await fetch(`/api/current/user?shop_domain=${encodeURIComponent(shop_domain)}`);
+                const response = await fetch(`/api/current/user?shop_domain=${encodeURIComponent(shop_domain)}`, {
+                    method: "GET",
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                });
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
@@ -41,7 +46,8 @@ export function UsersCard() {
                 } catch (error) {
                     throw new Error("Failed to parse JSON: " + error.message);
                 }
-                console.log("Shopify User ID:", data['user'].shopify_user_id, "User Access Scopes:", data['user'].access_scopes);
+                console.log("Shopify User ID:", data['user'].shopify_user_id);
+                console.log("User Access Scopes:", data['user'].access_scopes);
                 if (!data['user']) {
                     throw new Error("No user data found");
                 }
@@ -71,6 +77,8 @@ export function UsersCard() {
                         <ToastTestButton />
                         <ModalTestButton />
                         <HotwireTestButton />
+                        <SubscriptionCreateButton />
+                        <SubscriptionStatusButton />
                     </ButtonGroup>
                 </Layout.Section>
             </Card>
