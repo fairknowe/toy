@@ -1,0 +1,23 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  subscription_plan: one
+  interval: MyString
+  price_amount: 9.99
+  price_currency_code: MyString
+  terms: MyString
+  balance_used_amount: 9.99
+  balance_used_currency_code: MyString
+  capped_amount: 9.99
+  capped_amount_currency_code: MyString
+
+two:
+  subscription_plan: two
+  interval: MyString
+  price_amount: 9.99
+  price_currency_code: MyString
+  terms: MyString
+  balance_used_amount: 9.99
+  balance_used_currency_code: MyString
+  capped_amount: 9.99
+  capped_amount_currency_code: MyString

@@ -77,7 +77,9 @@ export function SubscriptionCreateButton() {
                                     tone={'success'}
                                     accessibilityLabel="Confirm subscription (opens a new window)"
                                     icon={ExternalIcon}
-                                    url={confirmChargesUrl}>
+                                    url={confirmChargesUrl}
+                                    onClick={handleModalClose}
+                                >
                                     Confirm subscription
                                 </Button>
                             </div>

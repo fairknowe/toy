@@ -1,0 +1,21 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  subscription_pricing_detail: one
+  duration_limit_in_intervals: 1
+  remaining_duration_in_intervals: 1
+  price_after_discount_amount: 9.99
+  price_after_discount_currency_code: MyString
+  amount: 9.99
+  currency_code: MyString
+  percentage: 9.99
+
+two:
+  subscription_pricing_detail: two
+  duration_limit_in_intervals: 1
+  remaining_duration_in_intervals: 1
+  price_after_discount_amount: 9.99
+  price_after_discount_currency_code: MyString
+  amount: 9.99
+  currency_code: MyString
+  percentage: 9.99

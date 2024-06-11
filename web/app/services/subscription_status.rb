@@ -42,7 +42,18 @@ class SubscriptionStatus < ApplicationService
                     }
                   }
                 }
-
+                ... on AppUsagePricing {
+                  terms
+                  interval
+                  balanceUsed {
+                    amount
+                    currencyCode
+                  }
+                  cappedAmount {
+                    amount
+                    currencyCode
+                  }
+                }
               }
             }
           }
@@ -59,12 +70,10 @@ class SubscriptionStatus < ApplicationService
   end
 
   def call
-    Rails.logger.info("[#{self.class}] - Line #{__LINE__}: in SubscriptionStatus#call, session: #{@session.inspect}")
     client = ShopifyAPI::Clients::Graphql::Admin.new(session: @session)
     response = client.query(
       query: ACTIVE_SUBSCRIPTIONS_QUERY,
     )
-    Rails.logger.info("[#{self.class}] - Line #{__LINE__}: in SubscriptionStatus#call, response: #{response.inspect}")
     process_response(response)
   end
 
@@ -80,12 +89,13 @@ class SubscriptionStatus < ApplicationService
     if appInstallation.nil?
       { success: false, queryError: "No app installation information is available", status_code: 200, shop_domain: @shop_domain }
     elsif appInstallation.is_a?(Hash)
-        return { success: false, queryError: "No app installation information is available", status_code: 200, shop_domain: @shop_domain } if appInstallation.empty?
+      return { success: false, queryError: "No app installation information is available", status_code: 200, shop_domain: @shop_domain } if appInstallation.empty?
 
-        activeSubscriptions = response.body.dig("data", "appInstallation", "activeSubscriptions")
-        return { success: false, queryError: "No active subscriptions information is available", status_code: 200, shop_domain: @shop_domain } if activeSubscriptions.empty?
+      activeSubscriptions = response.body.dig("data", "appInstallation", "activeSubscriptions")
+      # Rails.logger.info("[#{self.class}] - Line #{__LINE__}: in SubscriptionStatus#call, activeSubscriptions: #{activeSubscriptions.inspect}")
+      return { success: false, queryError: "No active subscriptions information is available", status_code: 200, shop_domain: @shop_domain } if activeSubscriptions.empty?
 
-      Rails.logger.info("[#{self.class}] - Line #{__LINE__}: in SubscriptionStatus#call, activeSubscriptions: #{activeSubscriptions.inspect}")
+      ProcessSubscriptionsJob.perform_later(activeSubscriptions)
       { success: true, activeSubscriptions: activeSubscriptions, status_code: 200, shop_domain: @shop_domain }
     else
       Rails.logger.warn("[#{self.class}] - Line #{__LINE__}: in SubscriptionStatus#process_response. appInstallation is of type #{appInstallation.class}.")

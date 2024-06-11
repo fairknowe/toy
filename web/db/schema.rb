@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_04_26_223201) do
+ActiveRecord::Schema[7.1].define(version: 2024_06_09_193325) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -21,6 +21,42 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_26_223201) do
     t.datetime "updated_at", null: false
     t.string "access_scopes", default: "", null: false
     t.index ["shopify_domain"], name: "index_shops_on_shopify_domain", unique: true
+  end
+
+  create_table "subscription_line_items", primary_key: "line_item_id", id: :string, force: :cascade do |t|
+    t.string "subscription_id", null: false
+    t.string "interval"
+    t.decimal "price_amount"
+    t.string "price_currency_code"
+    t.string "terms"
+    t.decimal "balance_used_amount"
+    t.string "balance_used_currency_code"
+    t.decimal "capped_amount"
+    t.string "capped_amount_currency_code"
+    t.integer "discount_duration_limit_in_intervals"
+    t.integer "discount_remaining_duration_in_intervals"
+    t.decimal "discount_price_after_discount_amount"
+    t.string "discount_price_after_discount_currency_code"
+    t.decimal "discount_value_amount"
+    t.string "discount_value_currency_code"
+    t.decimal "discount_percentage"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["line_item_id"], name: "index_subscription_line_items_on_line_item_id", unique: true
+    t.index ["subscription_id"], name: "index_subscription_line_items_on_subscription_id"
+  end
+
+  create_table "subscriptions", primary_key: "subscription_id", id: :string, force: :cascade do |t|
+    t.string "name"
+    t.string "status"
+    t.datetime "current_period_end"
+    t.string "return_url"
+    t.boolean "test"
+    t.integer "trial_days"
+    t.datetime "subscription_created_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["subscription_id"], name: "index_subscriptions_on_subscription_id", unique: true
   end
 
   create_table "users", force: :cascade do |t|
@@ -34,4 +70,5 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_26_223201) do
     t.index ["shopify_user_id"], name: "index_users_on_shopify_user_id", unique: true
   end
 
+  add_foreign_key "subscription_line_items", "subscriptions", primary_key: "subscription_id"
 end

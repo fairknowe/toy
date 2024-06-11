@@ -2,6 +2,9 @@
 
 ## Implement Shopify Billing API
 
+### added subscription models, migrations, processing job, and update webhook registration v.0.4.0
+Added Subscription and SubscriptionLineItem models, migrations, and processing job. Updated webhook registration to include the 'app/uninstalled' webhook.
+
 ### added GraphQL queries and related frontend buttons v.0.3.0
 Added AppSubscriptionCreate and currentAppInstallation GraphQL queries with related test buttons on the front end.
 

@@ -8,6 +8,7 @@ ShopifyApp.configure do |config|
     # After a store owner uninstalls your app, Shopify invokes the APP_UNINSTALLED webhook
     # to let your app know.
     { topic: "app/uninstalled", address: "api/toy_webhooks/app_uninstalled" },
+    { topic: "app_subscriptions/update", address: "api/toy_webhooks/app_subscriptions_update" },
     # { topic: "products/create", address: "api/toy_webhooks/app_uninstalled"  },
     # { topic: "products/update", address: "api/toy_webhooks/app_uninstalled"  },
     # { topic: "products/delete", address: "api/toy_webhooks/app_uninstalled"  },
