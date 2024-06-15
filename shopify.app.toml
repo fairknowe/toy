@@ -1,3 +1,35 @@
-# This file stores configurations for your Shopify app.
+# Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
 
+client_id = "16736ca5957faf119fef3f77dd8a14f5"
+name = "TOY"
+handle = "toy-1"
+application_url = "https://fki.ngrok.io/"
+embedded = true
+
+[build]
+automatically_update_urls_on_dev = false
+dev_store_url = "got-any-store.myshopify.com"
+include_config_on_deploy = true
+
+[access_scopes]
+# Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
 scopes = "write_products"
+use_legacy_install_flow = false
+
+[auth]
+redirect_urls = [
+  "https://fki.ngrok.io/auth/callback",
+  "https://fki.ngrok.io/auth/shopify/callback",
+  "https://fki.ngrok.io/api/auth/callback"
+]
+
+[webhooks]
+api_version = "2024-04"
+
+  [webhooks.privacy_compliance]
+  customer_deletion_url = "https://fki.ngrok.io/api/toy_webhooks/customers_redact"
+  customer_data_request_url = "https://fki.ngrok.io/api/toy_webhooks/customers_data_request"
+  shop_deletion_url = "https://fki.ngrok.io/api/toy_webhooks/shop_redact"
+
+[pos]
+embedded = false

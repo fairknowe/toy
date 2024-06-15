@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class AppUninstalledJob < ActiveJob::Base
+class ProductsUpdateJob < ActiveJob::Base
   extend ShopifyAPI::Webhooks::WebhookHandler
 
   class << self
@@ -17,11 +17,10 @@ class AppUninstalledJob < ActiveJob::Base
       return
     end
 
-    ActiveRecord::Base.transaction do
-      User.where(shopify_domain: shop_domain).destroy_all
-      shop.destroy!
-    end
+    Rails.logger.info("Line #{__LINE__}: in ProductsUpdateJob. Shop '#{shop_domain}', webhook: #{webhook.inspect}")
+    Rails.logger.info("Line #{__LINE__}: in ProductsUpdateJob. TODO: Add code to process the webhook data")
+
   rescue StandardError => e
-    Rails.logger.error("[#{self.class}] - Line #{__LINE__}: in AppUninstalledJob. Error deleting shop '#{shop_domain}' and associated users: #{e.message}")
+    Rails.logger.error("Line #{__LINE__}: in ProductsUpdateJob. Error: #{e.message}")
   end
 end

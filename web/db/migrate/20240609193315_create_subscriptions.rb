@@ -2,6 +2,7 @@ class CreateSubscriptions < ActiveRecord::Migration[7.1]
   def change
     create_table :subscriptions, id: false do |t|
       t.string :subscription_id, null: false, primary_key: true
+      t.string :shopify_domain
       t.string :name
       t.string :status
       t.datetime :current_period_end

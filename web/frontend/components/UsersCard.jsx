@@ -2,7 +2,15 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { ButtonGroup, Card, Text, Layout } from "@shopify/polaris";
 import { useAppBridge } from "@shopify/app-bridge-react";
-import { ModalTestButton, ToastTestButton, HotwireTestButton, SubscriptionCreateButton, SubscriptionStatusButton } from "../components";
+import {
+    ModalTestButton,
+    ToastTestButton,
+    HotwireTestButton,
+    SubscriptionCreateButton,
+    SubscriptionStatusButton,
+    SubscriptionExtendButton,
+    SubscriptionCancelButton,
+} from "../components";
 
 export function UsersCard() {
     const [userAccountAccess, setUserAccountAccess] = useState(null);
@@ -23,7 +31,6 @@ export function UsersCard() {
         const fetchData = async () => {
             try {
                 const userData = await shopify.user();
-                console.log("User accountAccess:", userData.accountAccess);
                 setUserAccountAccess(userData.accountAccess);
 
                 const response = await fetch(`/api/current/user?shop_domain=${encodeURIComponent(shop_domain)}`, {
@@ -46,8 +53,6 @@ export function UsersCard() {
                 } catch (error) {
                     throw new Error("Failed to parse JSON: " + error.message);
                 }
-                console.log("Shopify User ID:", data['user'].shopify_user_id);
-                console.log("User Access Scopes:", data['user'].access_scopes);
                 if (!data['user']) {
                     throw new Error("No user data found");
                 }
@@ -79,6 +84,8 @@ export function UsersCard() {
                         <HotwireTestButton />
                         <SubscriptionCreateButton />
                         <SubscriptionStatusButton />
+                        <SubscriptionExtendButton />
+                        <SubscriptionCancelButton />
                     </ButtonGroup>
                 </Layout.Section>
             </Card>

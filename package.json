@@ -1,6 +1,6 @@
 {
   "name": "toy",
-  "version": "0.0.1",
+  "version": "0.5.0",
   "license": "UNLICENSED",
   "scripts": {
     "shopify": "shopify",

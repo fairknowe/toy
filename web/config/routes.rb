@@ -16,7 +16,9 @@ Rails.application.routes.draw do
   post "/api/products/create", to: "products#create"
   get "/api/hotwire/update", to: "hotwire#update"
   get "/api/hotwire/close", to: "hotwire#close"
-  post "/api/subscriptions/create", to: "subscriptions#create"
+  get "/api/subscriptions/cancel", to: "subscriptions#cancel"
+  get "/api/subscriptions/create", to: "subscriptions#create"
+  get "/api/subscriptions/extend", to: "subscriptions#extend"
   get "/api/subscriptions/status", to: "subscriptions#status"
 
   # Any other routes will just render the react app

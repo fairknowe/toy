@@ -12,7 +12,6 @@ class HomeController < ApplicationController
     params.permit(:shop, :host)
     @shop_origin = params[:shop]
     @host = params[:host]
-    Rails.logger.info("[#{self.class}] - Line #{__LINE__}: in HomeController#index. shop_origin: #{@shop_origin}, host: #{@host}")
   end
 
   private
@@ -30,7 +29,6 @@ class HomeController < ApplicationController
       @client_id = payload["aud"]
       @shop_domain = payload["dest"].split("/").last
       @shopify_user_id = payload["sub"]
-      Rails.logger.info("[#{self.class}] - Line #{__LINE__}: JWT decoded successfully. shopify_user_id: #{@shopify_user_id}")
     rescue JWT::DecodeError => e
       Rails.logger.error("[#{self.class}] - Line #{__LINE__}: Error decoding JWT - #{e.message}")
       redirect_to("/ErrorHandler") and return

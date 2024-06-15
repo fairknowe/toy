@@ -1,23 +1,26 @@
 # frozen_string_literal: true
 
 # AppWebhooksController handles Shopify webhooks.
-# This code is created and owned by Fairknowe Inc. (FKI) All rights reserved
+
 class AppWebhooksController < ActionController::Base
   include ShopifyApp::WebhookVerification
 
   def receive
-    if params[:myshopify_domain].present? && params[:domain].present?
-      # Parse and convert the body to a hash if it's passed as parameters
-      body_params = params[:app_webhook].permit!.to_h if params[:app_webhook].present?
-      data = ShopifyAPI::Webhooks::WebhookMetadata.new(
-        topic: params["type"],
-        shop: params["myshopify_domain"],
-        body: body_params || {},
-        api_version: ShopifyAPI::Context.api_version,
-        webhook_id: params["id"].to_s,
-        )
-      Toy::WebhookHandler.handle(data:)
-    end
+    request_headers_hash = request.headers.to_h
+    shopify_domain = request_headers_hash["HTTP_X_SHOPIFY_SHOP_DOMAIN"]
+    api_version = request_headers_hash["HTTP_X_SHOPIFY_API_VERSION"]
+    webhook_id = request_headers_hash["HTTP_X_SHOPIFY_WEBHOOK_ID"]
+    topic = request_headers_hash["HTTP_X_SHOPIFY_TOPIC"]
+    body_params = JSON.parse(request.raw_post) if request.raw_post.present?
+    data = ShopifyAPI::Webhooks::WebhookMetadata.new(
+      topic: topic,
+      shop: shopify_domain,
+      body: body_params || {},
+      api_version: api_version,
+      webhook_id: webhook_id,
+      )
+
+    Toy::WebhookHandler.handle(data:)
     head(:ok)
   end
 end

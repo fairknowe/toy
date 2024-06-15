@@ -47,6 +47,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_09_193325) do
   end
 
   create_table "subscriptions", primary_key: "subscription_id", id: :string, force: :cascade do |t|
+    t.string "shopify_domain"
     t.string "name"
     t.string "status"
     t.datetime "current_period_end"

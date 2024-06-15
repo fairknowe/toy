@@ -2,6 +2,9 @@
 
 ## Implement Shopify Billing API
 
+### added subscription extend and delete; modified webhook handling; added webhook data processing v.0.5.0
+Also updated npm and Ruby gems. Various bug fixes and improvements.
+
 ### added subscription models, migrations, processing job, and update webhook registration v.0.4.0
 Added Subscription and SubscriptionLineItem models, migrations, and processing job. Updated webhook registration to include the 'app/uninstalled' webhook.
 

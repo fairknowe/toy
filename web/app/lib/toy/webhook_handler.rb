@@ -9,11 +9,11 @@ module Toy
       def handle(data: nil)
         return if data.nil?
 
-        topic = data.topic
+        topic = data.topic.gsub("/", "_")
         job_class_name = [ ShopifyApp.configuration.webhook_jobs_namespace, "#{topic}_job" ].compact.join("/").classify
 
         if (job_class = job_class_name.safe_constantize)
-          job_class.handle(topic: topic, shop: data.shop, body: data.body)
+          job_class.handle(topic: data.topic, shop: data.shop, body: data.body)
         else
           Rails.logger.warn("[#{self.class}] - Line #{__LINE__}: in WebhookHandler#handle. No job class found for topic: #{topic}")
         end

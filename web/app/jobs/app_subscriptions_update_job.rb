@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class AppSubscriptionsUpdateJob < ActiveJob::Base
-  extend ShopifyAPI::Webhooks::Handler
+  extend ShopifyAPI::Webhooks::WebhookHandler
 
   class << self
     def handle(topic:, shop:, body:)
@@ -18,9 +18,15 @@ class AppSubscriptionsUpdateJob < ActiveJob::Base
     end
 
     Rails.logger.info("Line #{__LINE__}: in AppSubscriptionsUpdateJob. Shop '#{shop_domain}', webhook: #{webhook.inspect}")
-    Rails.logger.info("Line #{__LINE__}: in AppSubscriptionsUpdateJob. TODO: Add code to process the webhook data")
-    # TODO: Add code to process the webhook data
-    # ProcessSubscriptionsJob.perform_later(activeSubscriptions)
+    app_subscription = webhook["app_subscription"]
+    subscription_data = {
+      "id" => app_subscription["admin_graphql_api_id"],
+      "name" => app_subscription["name"],
+      "status" => app_subscription["status"],
+      "currency" => app_subscription["currency"],
+      "capped_amount" => app_subscription["capped_amount"],
+    }
+    ProcessSubscriptionsJob.perform_later(shop_domain, subscription_data)
 
   rescue StandardError => e
     Rails.logger.error("Line #{__LINE__}: in AppSubscriptionsUpdateJob. Error: #{e.message}")

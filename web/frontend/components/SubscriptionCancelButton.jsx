@@ -1,42 +1,41 @@
 import { useState, useCallback } from 'react';
 import { Button } from "@shopify/polaris";
-import { ExternalIcon } from '@shopify/polaris-icons';
 import { Modal, TitleBar, useAppBridge } from "@shopify/app-bridge-react";
 
-export function SubscriptionCreateButton() {
+export function SubscriptionCancelButton() {
     const shopify = useAppBridge();
-    const modalID = "billing-modal";
+    const modalID = "subscription-cancel-modal";
     const [queryErrorMessage, setQueryErrorMessage] = useState(null);
     const [subscriptionId, setSubscriptionId] = useState("");
-    const [confirmChargesUrl, setConfirmChargesUrl] = useState("");
+    const [subscriptionStatus, setSubscriptionStatus] = useState("");
     const [modalOpen, setModalOpen] = useState(false);
 
-    async function createSubscription() {
+    async function cancelSubscription() {
         try {
-            const response = await fetch("/api/subscriptions/create", {
+            const response = await fetch("/api/subscriptions/cancel", {
                 method: "GET",
                 headers: {
                     'Content-Type': 'application/json'
                 },
             });
-            const { success, appSubscriptionId, confirmationUrl, queryError } = await response.json();
+            const { success, appSubscriptionId, appSubscriptionStatus, queryError } = await response.json();
 
             if (!success && !queryError) {
-                const errorMessage = "Failed to create App subscription: Unknown error";
+                const errorMessage = "Failed to cancel App subscription: Unknown error";
                 setQueryErrorMessage(errorMessage);
                 console.error(errorMessage);
             } else if (queryError) {
-                const errorMessage = `Failed to create App subscription. User error message: ${queryError}`;
+                const errorMessage = `Failed to cancel App subscription. User error message: ${queryError}`;
                 setQueryErrorMessage(errorMessage);
                 console.error(errorMessage);
             } else {
                 setSubscriptionId(appSubscriptionId);
-                setConfirmChargesUrl(confirmationUrl);
+                setSubscriptionStatus(appSubscriptionStatus);
                 setQueryErrorMessage(null);
             }
             setModalOpen(true);
         } catch (error) {
-            const errorMessage = `Error creating subscription: ${error.message || error.toString()}`;
+            const errorMessage = `Error cancelling subscription: ${error.message || error.toString()}`;
             setQueryErrorMessage(errorMessage);
             console.error(errorMessage);
             setModalOpen(true);
@@ -44,7 +43,7 @@ export function SubscriptionCreateButton() {
     }
 
     const handleButtonClick = useCallback(async () => {
-        await createSubscription();
+        await cancelSubscription();
     }, []);
 
     const handleModalClose = () => {
@@ -54,11 +53,11 @@ export function SubscriptionCreateButton() {
 
     return (
         <>
-            <Button onClick={handleButtonClick}>Subscription create</Button>
+            <Button onClick={handleButtonClick}>Subscription cancel</Button>
             <Modal id={modalID} open={modalOpen} onHide={handleModalClose} variant="large">
-                <TitleBar title="Approve Subscription">
+                <TitleBar title="Subscription Cancelled">
                     <button onClick={handleModalClose}>
-                        Cancel
+                        Done
                     </button>
                 </TitleBar>
                 <div style={{ padding: '5px 10px' }}>
@@ -70,18 +69,7 @@ export function SubscriptionCreateButton() {
                                 {`Subscription ID: ${subscriptionId}`}
                             </div>
                             <div style={{ padding: '5px 10px' }}>
-                                {`Confirmation URL: ${confirmChargesUrl}`}
-                            </div>
-                            <div style={{ padding: '5px 10px' }}>
-                                <Button
-                                    tone={'success'}
-                                    accessibilityLabel="Confirm subscription (opens a new window)"
-                                    icon={ExternalIcon}
-                                    url={confirmChargesUrl}
-                                    onClick={handleModalClose}
-                                >
-                                    Confirm subscription
-                                </Button>
+                                {`Subscription Status: ${subscriptionStatus}`}
                             </div>
                         </>
                     )}

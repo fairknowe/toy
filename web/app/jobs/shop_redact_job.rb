@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
 class ShopRedactJob < ActiveJob::Base
-  extend ShopifyAPI::Webhooks::Handler
-  # extend ShopifyAPI::Webhooks::WebhookHandler
+  extend ShopifyAPI::Webhooks::WebhookHandler
 
   class << self
     def handle(topic:, shop:, body:)

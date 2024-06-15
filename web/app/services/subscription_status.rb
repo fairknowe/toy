@@ -95,7 +95,6 @@ class SubscriptionStatus < ApplicationService
       # Rails.logger.info("[#{self.class}] - Line #{__LINE__}: in SubscriptionStatus#call, activeSubscriptions: #{activeSubscriptions.inspect}")
       return { success: false, queryError: "No active subscriptions information is available", status_code: 200, shop_domain: @shop_domain } if activeSubscriptions.empty?
 
-      ProcessSubscriptionsJob.perform_later(activeSubscriptions)
       { success: true, activeSubscriptions: activeSubscriptions, status_code: 200, shop_domain: @shop_domain }
     else
       Rails.logger.warn("[#{self.class}] - Line #{__LINE__}: in SubscriptionStatus#process_response. appInstallation is of type #{appInstallation.class}.")

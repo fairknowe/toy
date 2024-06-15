@@ -5,4 +5,6 @@ export { ToastTestButton } from "./ToastTestButton";
 export { HotwireTestButton } from "./HotwireTestButton";
 export { SubscriptionCreateButton } from "./SubscriptionCreateButton";
 export { SubscriptionStatusButton } from "./SubscriptionStatusButton";
+export { SubscriptionExtendButton } from "./SubscriptionExtendButton";
+export { SubscriptionCancelButton } from "./SubscriptionCancelButton";
 export * from "./providers";

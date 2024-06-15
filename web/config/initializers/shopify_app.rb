@@ -9,9 +9,9 @@ ShopifyApp.configure do |config|
     # to let your app know.
     { topic: "app/uninstalled", address: "api/toy_webhooks/app_uninstalled" },
     { topic: "app_subscriptions/update", address: "api/toy_webhooks/app_subscriptions_update" },
-    # { topic: "products/create", address: "api/toy_webhooks/app_uninstalled"  },
-    # { topic: "products/update", address: "api/toy_webhooks/app_uninstalled"  },
-    # { topic: "products/delete", address: "api/toy_webhooks/app_uninstalled"  },
+    { topic: "products/create", address: "api/toy_webhooks/products_create" },
+    { topic: "products/update", address: "api/toy_webhooks/products_update"  },
+    { topic: "products/delete", address: "api/toy_webhooks/products_delete"  },
   ]
   config.application_name = "Toy"
   config.old_secret = ""
@@ -80,17 +80,17 @@ def add_privacy_webhooks
     #
     # 48 hours after a store owner uninstalls your app, Shopify invokes this SHOP_REDACT webhook.
     # https://shopify.dev/docs/apps/webhooks/configuration/mandatory-webhooks#shop-redact
-    { topic: "shop/redact", address: "api/webhooks/shop_redact" },
+    { topic: "shop/redact", address: "api/toy_webhooks/shop_redact" },
 
     # Store owners can request that data is deleted on behalf of a customer. When this happens,
     # Shopify invokes this CUSTOMERS_REDACT webhook to let your app know.
     # https://shopify.dev/docs/apps/webhooks/configuration/mandatory-webhooks#customers-redact
-    { topic: "customers/redact", address: "api/webhooks/customers_redact" },
+    { topic: "customers/redact", address: "api/toy_webhooks/customers_redact" },
 
     # Customers can request their data from a store owner. When this happens, Shopify invokes
     # this CUSTOMERS_DATA_REQUEST webhook to let your app know.
     # https://shopify.dev/docs/apps/webhooks/configuration/mandatory-webhooks#customers-data_request
-    { topic: "customers/data_request", address: "api/webhooks/customers_data_request" },
+    { topic: "customers/data_request", address: "api/toy_webhooks/customers_data_request" },
   ]
 
   ShopifyApp.configuration.webhooks = if ShopifyApp.configuration.has_webhooks?

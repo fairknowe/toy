@@ -2,13 +2,12 @@
 
 class ProcessSubscriptionsJob < ApplicationJob
   queue_as :default
-
-  def perform(subscriptions_data)
+  def perform(shop_domain, subscription_data)
     Subscription.transaction do
-      subscriptions_data.each do |subscription_data|
         begin
           subscription = Subscription.find_or_initialize_by(subscription_id: subscription_data["id"])
           subscription.assign_attributes(
+            shopify_domain: shop_domain,
             name: subscription_data["name"],
             status: subscription_data["status"],
             current_period_end: subscription_data["currentPeriodEnd"],
@@ -18,6 +17,9 @@ class ProcessSubscriptionsJob < ApplicationJob
             subscription_created_at: subscription_data["createdAt"],
           )
           subscription.save!
+
+          unless subscription_data["lineItems"].nil? || subscription_data["lineItems"].empty?
+
 
           line_item_ids = subscription_data["lineItems"].map { |li| li["id"] }
           existing_line_items = SubscriptionLineItem.where(line_item_id: line_item_ids).index_by(&:line_item_id)
@@ -43,18 +45,17 @@ class ProcessSubscriptionsJob < ApplicationJob
                 discount_value_currency_code: line_item_data.dig("plan", "pricingDetails", "discount", "value", "amount", "currencyCode"),
                 discount_percentage: line_item_data.dig("plan", "pricingDetails", "discount", "value", "percentage"),
               )
-              Rails.logger.info("Line #{__LINE__}: in ProcessSubscriptionsJob. subscription_line_item: #{subscription_line_item.inspect}")
               subscription_line_item.save!
             rescue StandardError => e
               Rails.logger.error("Line #{__LINE__}: in ProcessSubscriptionsJob. Error processing line item #{line_item_data["line_item_id"]}: #{e.message}")
               next
             end
           end
+          end
         rescue StandardError => e
           Rails.logger.error("Line #{__LINE__}: in ProcessSubscriptionsJob. Error processing subscription #{subscription_data["subscription_id"]}: #{e.message}")
           next
         end
       end
-    end
   end
 end
